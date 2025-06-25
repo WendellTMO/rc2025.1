@@ -144,14 +144,39 @@ Agora vocês irão trabalhar no processo inverso: como recuperar os dados origin
 
 🔎❓ **Perguntas para investigar** 
 - **Q2.1** : Que fatores podem afetar a qualidade da decodificação?
+
+    Interferências nas ondas de transmissão de audio, como ruído e ecos, podem alterar qualidade da decodificação e consequentemente a sequência original de bits. Com o aúdio localmente é facilmente decodificado pelo algoritmo que também está localmente, porém fazer a transmissão desses dados para longas distâncias podem ter interferências de diferentes ondas, como: Sons externos, qualidade do aparelho receptor, qualidade do aparelho transmissor, sobreposições de ondas, etc...
+
 - **Q2.2** : O que acontece se a taxa de transmissão for muito alta?
+
+    Quando ajustei a duração dos bits para 0.05 segundos (tentando simular uma alta transmissão), o tempo disponível para detectar e analisar a frequência correspondente a cada bit se torna insuficiente, dito isso, observei que na decodificação Manchester o resultado foi incorreto, assim não conseguindo decodificar da maneira adequada.
+
 - **Q2.3** : Como o sistema decide se a frequências representa '0' ou '1'? (observe os codigos)
+
+    Dentro dos dois algoritmos de decodificação, o processo de interpretar um sinal como '0' ou '1' segue duas etapas principais:
+    
+    1. **Detecção da frequência**: Utiliza-se a função `detect_frequency`, que aplica uma Transformada Rápida de Fourier (FFT) para identificar a frequência dominante no intervalo correspondente a um bit.
+
+    2. **Mapeamento da frequência para bit**: Em seguida, a função `frequency_to_bit` compara a frequência detectada com um limiar (threshold). Se a frequência for maior que esse valor, interpreta-se como bit '1'; caso contrário, bit '0'.
+
+    Após isso, a lógica de interpretação depende da codificação:
+
+    - **NRZ**: Cada bit é codificado com uma frequência fixa durante todo o intervalo. O receptor apenas analisa cada intervalo completo, detecta a frequência e converte diretamente para '0' ou '1'.
+
+    - **Manchester**: Cada bit possui uma transição no meio, metade do intervalo usa uma frequência e a outra metade, outra. O receptor divide o intervalo ao meio, aplica FFT em cada metade, e analisa a direção da transição:
+        - Se a frequência muda de baixa para alta: representa um bit '0'.
+        - Se a frequência muda de alta para baixa: representa um bit '1'.
 
 🔓🔎 **Análise de modulação**
 - Consulta na [tabela]() qual arquivo você deve decodificar é respondas as seguintes questões
     - **A2.1** : Qual a modulação foi utilizada?
+        - NRZ
+
     - **A2.2** : Qual o número de bits na menssagem
+        - 9 bits
+
     - **A2.3** : Qual a menssagem enviada?
+        - Mensagem: 101110000
 
 ### **Etapa 3**: Impacto do Ruído na Comunicação
 
@@ -189,7 +214,9 @@ O que vocês irão fazer:
 
 🔓 **Perguntas para investigar** 
 - **Q4.1** : Qual foi a menssagem enviada enviada no arquivo `dados_ar.wav`?
+    - A mensagem foi: 10110
 - **Q4.2** : Quantas reproduções (vezes) foram necessarias para decodificar a menssagem completa?
+    - Foram umas 30 tentativas, foi um trabalho de tentar entender onde estava o microfone do meu notebook pra posicionar da melhor maneira. E os resultados muitas vezes chegavam diferente, só tive confiança na resposta quando executei 5 vezes e recebi o mesmo resultado.
 
 
 
