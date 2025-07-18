@@ -312,9 +312,9 @@ Esta etapa final é uma investigação para encontrar os limites da sua implemen
 
 | VARIAVEL              | VALOR |
 | :-                    | :-    |
-| `MENSAGEM`            |   ?   |
-| `MENSAGEM_BASE`       |   ?   |
-| `CRC`                 |   ?   |
+| `MENSAGEM`            |   wendell tome marinho oliveira   |
+| `MENSAGEM_BASE`       |   0111011101100101011011100110010001100101011011000110110000100000011101000110111101101101011001010010000001101101011000010111001001101001011011100110100001101111001000000110111101101100011010010111011001100101011010010111001001100001 |
+| `CRC`                 |   10001000000100001   |
 
 ### 4.2 - A Caça aos Erros
 
